@@ -31,12 +31,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: ./src
       - name: Upload artifact to Blob
         uses: fixpoint/azblob-upload-artifact@v4
         with:
           connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           name: build-artifact
-          path: .
+          path: ./src
 
  
