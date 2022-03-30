@@ -32,25 +32,11 @@ jobs:
         with:
           name: node-app
           path: .
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+      - name: Upload artifact to Blob
+        uses: fixpoint/azblob-upload-artifact@v4
         with:
-          name: node-app
+          connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          name: build-artifact
+          path: .
 
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with:
-          app-name: 'github-action-fileupdate'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F385C17DEA4478A992D7D13CBF2072D }}
-          package: .
+ 
