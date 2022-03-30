@@ -32,6 +32,12 @@ jobs:
         with:
           name: node-app
           path: ./src
+      - name: Create env file
+        run: |
+          touch src/.env
+          echo API_KEY2="https://yoursite.com" >> src/.env
+          echo API_KEY=${{ secrets.KEY1 }} >> src/.env
+          cat src/.env
       - name: Upload artifact to Blob
         uses: fixpoint/azblob-upload-artifact@v4
         with:
